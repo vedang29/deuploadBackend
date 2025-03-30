@@ -1,4 +1,4 @@
-package com.deupload.deuploadBackend.Services;
+package com.deupload.deuploadBackend.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

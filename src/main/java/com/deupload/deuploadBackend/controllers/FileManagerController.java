@@ -1,39 +1,32 @@
-package com.deupload.deuploadBackend.Controllers;
+package com.deupload.deuploadBackend.controllers;
 
-import com.deupload.deuploadBackend.Services.FileStorageService;
+import com.deupload.deuploadBackend.services.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
+@RequestMapping("api/")
 public class FileManagerController {
 
     @Autowired
     private FileStorageService fileStorageService;
     private static final Logger log = Logger.getLogger(FileManagerController.class.getName());
 
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/upload-file")
     public boolean uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         try {
@@ -73,6 +66,7 @@ public class FileManagerController {
         }
     }
 
+//    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/list-files")
     public ResponseEntity<List<String>> listFiles() {
         try {
